@@ -87,6 +87,11 @@ function predictWebcam() {
     for (let n = 0; n < predictions.length; n++) {
       // If we are over 66% sure we are sure we classified it right, draw it!
       if (predictions[n].score > 0.66) {
+
+        if (predictions[n].class == 'person') {
+          console.log('A person was detected');
+        }
+          
         const p = document.createElement('p');
         p.innerText = predictions[n].class  + ' - with ' 
             + Math.round(parseFloat(predictions[n].score) * 100) 
