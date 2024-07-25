@@ -1,0 +1,49 @@
+Example for node ID and topics it will transmit that will be received by MQTT broker in the network (MQTT Protocol):
+
+For example, this is a node that will allow you to control a light from the Home Assistant interface
+
+char ID[20] = "lightingNode";  // Unique name for specific node in the system
+const char *CONFIG_TOPIC = "homeassistant/light/lightingNode/config";
+const char *STATE_TOPIC = "homeassistant/light/lightingNode/state";
+const char *COMMAND_TOPIC = "homeassistant/light/lightingNode/command";
+
+**if the node is a sensor device, replace "light" in this example with "sensor"
+
+**replace "lightingNode" with different node identifier depending on the sensor/output device
+
+The following is for editing the sendNodeDiscoveryMsg() function block in the code
+
+This applies to the lighting node example
+
+void sendNodeDiscoveryMsg() {
+  // This is the discovery topic for this specific device
+  String discoveryTopic = CONFIG_TOPIC;
+
+  DynamicJsonDocument doc(1024);
+  char buffer[512];
+
+  doc["name"] = "Lighting Node";
+  doc["dev_cla"] = "light";
+  doc["unique_id"] = "light1";
+  doc["command_topic"] = COMMAND_TOPIC;
+  doc["stat_t"]   = STATE_TOPIC;
+  doc["payload_on"] = "ON";
+  doc["payload_off"] = "OFF";
+  doc["state_on"] = "on";
+  doc["state_off"] = "off";
+
+  // Ignore these commented out lines for now
+  //doc["retain"] = true;
+  
+  size_t n = serializeJson(doc, buffer);
+
+  client.publish(discoveryTopic.c_str(), buffer, n);
+}
+
+** In reconnectToBroker() function, look for this line and uncomment it after applying the change:
+
+ the following can be used with a lighting output device:
+
+ client.publish(STATE_TOPIC,"off");
+
+ note:  the state to be published in the state topics depends on the state of the sensor/output device when the node is initially powered on
