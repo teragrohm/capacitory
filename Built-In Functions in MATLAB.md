@@ -2,7 +2,7 @@
 
 **Random Functions**
 
-$_{}$ $_{}$ $_{}$ $_{}$ $_{}$ In engineering calculations, randomly generated numbers are frequently provided in order to simulate real-world measurements and data. The different MATLAB functions intended for this are as follows:
+In engineering calculations, randomly generated numbers are frequently provided in order to simulate real-world measurements and data. The different MATLAB functions intended for this are as follows:
 
 **`rand()`**
 
